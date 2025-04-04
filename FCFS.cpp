@@ -10,7 +10,6 @@ Implementacion FCFS First Come First Set*/
 #include <tuple>
 #include <algorithm>
 #include <fstream>
-
 using namespace std;
 
 class Proceso{
