@@ -9,7 +9,7 @@ Implementacion Round Robin con Quantum Personalizable*/
 #include <string>
 #include <tuple>
 #include <algorithm>
-
+#include <fstream>
 using namespace std;
 
 class Proceso{
@@ -177,19 +177,37 @@ int main() {
 
     RoundRobin(procesos,5);
 
+    ofstream archivo("RR001.txt");
+    archivo << "# archivo: RR001.txt\n";
+    archivo << "# etiqueta; BT; AT; Q; Pr; WT; CT; RT; TAT\n";
+
+    double totalWT = 0, totalCT = 0, totalRT = 0, totalTAT = 0;
+
     for (Proceso p : procesos) {
-        cout << "Proceso: " << p.getEtiqueta() 
-             << " | Arrival Time: " << p.getArrivalTime() 
-             << " | Burst Time: " << p.getBurstTime() 
-             << " | Remaining Time: " << p.getRemainingTime() 
-             << " | Completion Time (CT): " << p.getCT() 
-             << " | Turnaround Time (TAT): " << p.getTAT() 
-             << " | Waiting Time (WT): " << p.getWT() 
-             << " | Response Time (RT): " << p.getRT() 
-             << " | Queue Number: " << p.getNumQueue()
-             << " | Priority: " << p.getPriority()
-             << " | First Execution: " << (p.getFirstExecution() ? "Yes" : "No") 
-             << endl;
+        archivo << p.getEtiqueta() << ";"
+                << p.getBurstTime() << ";"
+                << p.getArrivalTime() << ";"
+                << p.getNumQueue() << ";"
+                << p.getPriority() << ";"
+                << p.getWT() << ";"
+                << p.getCT() << ";"
+                << p.getRT() << ";"
+                << p.getTAT() << "\n";
+
+        totalWT += p.getWT();
+        totalCT += p.getCT();
+        totalRT += p.getRT();
+        totalTAT += p.getTAT();
     }
+    int n = procesos.size();
+    archivo << "WT=" << totalWT / n << "; "
+            << "CT=" << totalCT / n << "; "
+            << "RT=" << totalRT / n << "; "
+            << "TAT=" << totalTAT / n << ";\n";
+
+    archivo << "\nEste archivo mostrará el tiempo de espera (WT), tiempo de completado (CT),\n";
+    archivo << "tiempo de respuesta (RT) y TurnAround Time (TAT). Adicional, los valores\n";
+    archivo << "promedio de estas métricas\n";
+    archivo.close();
     return 0;
 }
