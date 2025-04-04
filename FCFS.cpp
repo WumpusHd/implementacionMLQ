@@ -155,8 +155,8 @@ int main() {
 
     FCFS(procesos);
 
-    ofstream archivo("mlq001.txt");
-    archivo << "# archivo: mlq001.txt\n";
+    ofstream archivo("FCFS001.txt");
+    archivo << "# archivo: FCFS001.txt\n";
     archivo << "# etiqueta; BT; AT; Q; Pr; WT; CT; RT; TAT\n";
 
     double totalWT = 0, totalCT = 0, totalRT = 0, totalTAT = 0;
